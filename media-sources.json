@@ -1,0 +1,145 @@
+{
+  "channel": "https://www.youtube.com/@dafang",
+  "playlist": "https://www.youtube.com/playlist?list=PL-aFVQ3QG8LQQPFO33PDawBeUutJNmn_I",
+  "checked": "2026-11-11",
+  "logos": {
+    "onekey.png": "https://onekey.so/icon/android-chrome-192x192.png",
+    "ledger.svg": "https://www.ledger.com/wp-content/themes/ledger-v2/public/images/ledger-logo-long.svg",
+    "safepal.svg": "https://www.safepal.com/assets/img/logo-dark.svg",
+    "tangem.png": "https://tangem.com/img/logos/logo-240x52.png",
+    "ellipal.png": "https://www.ellipal.com/cdn/shop/files/ellipal-logo-white_e8659558-af9f-4396-8af1-fbebd9b65cae.png?v=1784516768&width=400",
+    "keystone.webp": "https://keyst.one/assets/logo-Doeh9MQi.webp",
+    "coolwallet.png": "https://www.coolwallet.io/cdn/shop/files/24-1.618_1.png?v=1713931127&width=1361",
+    "secux.png": "https://secuxtech.com/cdn/shop/files/secux-logo_small.png?v=11498814628267335518",
+    "keepkey.png": "https://www.keepkey.com/images/logos/keepkey-logo-square.png",
+    "imkey.svg": "https://imkey.im/cdn/shop/files/Group_e235764d-babe-48cc-aae5-9811c52ccd8f.svg?v=1729652187&width=200",
+    "trezor.svg": {
+      "page": "https://trezor.io/",
+      "source": "header inline SVG"
+    },
+    "ballet.svg": {
+      "page": "https://www.ballet.com/",
+      "source": "header inline SVG"
+    }
+  },
+  "videos": {
+    "OneKey": [
+      {
+        "id": "nkOuDAWk0A4",
+        "title": "OneKey Neo 开箱实测：对比 Pro 2",
+        "tag": "开箱实测"
+      },
+      {
+        "id": "tGYpFf5bSOA",
+        "title": "OneKey Pro 2 开箱与比特币转入转出",
+        "tag": "开箱实测"
+      },
+      {
+        "id": "HlImO5xQJoo",
+        "title": "Classic 1S Pure 无电池版开箱",
+        "tag": "开箱实测"
+      },
+      {
+        "id": "KwysWuszfVI",
+        "title": "OneKey Pro 保姆级开箱教学",
+        "tag": "开箱教学"
+      },
+      {
+        "id": "L7OvbDPY5QI",
+        "title": "OneKey Classic 开箱与使用教学",
+        "tag": "开箱教学"
+      }
+    ],
+    "Ledger": [
+      {
+        "id": "JqJ2q5JU7lM",
+        "title": "Ledger Nano Gen5 开箱与 BTC 转入",
+        "tag": "开箱实测"
+      },
+      {
+        "id": "fqh_wYJu3S4",
+        "title": "Ledger Flex 开箱与使用教学",
+        "tag": "开箱教学"
+      },
+      {
+        "id": "MLLr_2Z5UiU",
+        "title": "Ledger Stax 保姆级开箱",
+        "tag": "开箱教学"
+      },
+      {
+        "id": "Voz2W9CJ3vU",
+        "title": "Ledger 新手入门与转账教学",
+        "tag": "入门教学"
+      }
+    ],
+    "Tangem": [
+      {
+        "id": "sRUU53y2CYI",
+        "title": "Tangem Ring 戒指钱包实物分享",
+        "tag": "实物分享"
+      },
+      {
+        "id": "v6O89CJbcCo",
+        "title": "Tangem 卡片钱包设置与体验",
+        "tag": "实物教学"
+      }
+    ],
+    "SafePal": [
+      {
+        "id": "a7gCCrWhbkI",
+        "title": "SafePal X1 冷钱包开箱与设置",
+        "tag": "开箱教学"
+      }
+    ],
+    "ELLIPAL": [
+      {
+        "id": "gXzOcjSgHno",
+        "title": "ELLIPAL Xcard 保姆级开箱分享",
+        "tag": "开箱教学"
+      },
+      {
+        "id": "EKzktbuvAY0",
+        "title": "ELLIPAL Titan 2.0 实物与转账教学",
+        "tag": "实物教学"
+      },
+      {
+        "id": "64cG7FgpRAM",
+        "title": "ELLIPAL Titan 使用教学",
+        "tag": "实物教学"
+      }
+    ],
+    "Keystone": [
+      {
+        "id": "YNBZia59okU",
+        "title": "Keystone 3 Pro × OKX Web3 实物教学",
+        "tag": "实物教学"
+      },
+      {
+        "id": "JBYa0mfeMHk",
+        "title": "Keystone 3 Pro 隔空操作与固件升级",
+        "tag": "操作教学"
+      }
+    ],
+    "Trezor": [
+      {
+        "id": "6oV4EjZeZFo",
+        "title": "多品牌硬件钱包开箱 · 含 Trezor",
+        "tag": "多品牌开箱"
+      }
+    ],
+    "CoolWallet": [
+      {
+        "id": "6oV4EjZeZFo",
+        "title": "多品牌硬件钱包开箱 · 含 CoolWallet",
+        "tag": "多品牌开箱"
+      }
+    ],
+    "imKey": [
+      {
+        "id": "mNkCXMuiw0Y",
+        "title": "imKey 开箱与转账入门教学",
+        "tag": "开箱教学"
+      }
+    ]
+  }
+}
