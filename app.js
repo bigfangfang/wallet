@@ -1,5 +1,5 @@
 const wallets = [
-{name:'OneKey',sub:'品牌入口 / Classic 实物教学',mark:'O',offer:'原站记录：九折',code:'BIGFANG',url:'https://onekey.so/r/BIGFANG',video:'L7OvbDPY5QI'},
+{name:'OneKey',sub:'专属链接 / Classic 实物教学',mark:'O',offer:'赠送 5–10 美元 BTC 兑换券',note:'通过专属链接购买参与活动；具体赠送金额及领取规则以活动页面为准。',url:'https://onekey.so/r/BIGFANG',video:'L7OvbDPY5QI'},
 {name:'Ledger',sub:'品牌入口 / 入门与转账教学',mark:'L',offer:'查看品牌活动',note:'原站曾记载最高 80 美元比特币活动，当前有效性待确认。',url:'https://shop.ledger.com/?r=6ce1458cbb9d',video:'Voz2W9CJ3vU'},
 {name:'Tangem',sub:'品牌入口 / 实物分享',mark:'T',offer:'原站记录：九折',code:'BIGFANG',url:'https://tangem.com/pricing/?promocode=bigfang',video:'v6O89CJbcCo'},
 {name:'SafePal',sub:'原站收录：SafePal S1',mark:'S',offer:'查看当前优惠',url:'https://store.safepal.com/safepal-s1-hardware-wallet.html?ref=bigfang1'},
