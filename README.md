@@ -1,6 +1,6 @@
 # BigFang Wallet
 
-冷钱包品牌、原站优惠记录与视频教学目录。纯 HTML / CSS / JavaScript，无需安装依赖。
+冷钱包品牌、折扣码、购买与收货安全须知与视频教学目录。纯 HTML / CSS / JavaScript，无需安装依赖。
 
 目标仓库：https://github.com/bigfangfang/wallet
 
@@ -8,7 +8,7 @@
 
 ## 发布
 
-将 index.html、style.css、app.js、CNAME、.nojekyll 放在仓库 main 分支根目录。
+将 index.html、style.css、wallet-data.js、app.js、favicon 与 og-image 图片、各品牌 logo、CNAME、.nojekyll 放在仓库 main 分支根目录。
 
 GitHub 仓库 Settings → Pages → Deploy from a branch → main / (root)。Custom domain 填 wallet.bigfang.vip，保存后再添加 DNS。
 
@@ -24,9 +24,18 @@ GitHub 仓库 Settings → Pages → Deploy from a branch → main / (root)。Cu
 
 ## 内容维护
 
-品牌数据位于 app.js 的 wallets 数组。添加或更新优惠前，应验证品牌结账页；当前文字是从原站继承的记录，并非当前优惠承诺。
+品牌数据与卡片模板在 wallet-data.js（wallets 数组顶部有字段说明）。改完后在仓库根目录运行：
 
-原始内容：https://bigfang.vip/coldwallet/，读取日期：2026-11-11。页面合并了重复品牌和 Trezor 型号；保留 Keystone 两个不同历史优惠入口。
+    node scripts/prerender.mjs
+
+它会把品牌卡片直接写进 index.html 的 `<!--cards:start-->` 与 `<!--cards:end-->` 之间，搜索引擎和 X / Telegram 的链接预览不用执行 JS 也能读到内容。忘了运行也不会坏，页面会在浏览器里补渲染。
+
+- 亲自在结账页核对过某个折扣后，给该品牌加上 `verified: '2026-11'`，卡片会显示"已核对"标记。
+- 限时活动用 `promo: {offer, code, note, until}`，截止时间过后页面自动恢复常规优惠（例：SafePal 黑五 SFP@BIGFANG，至 2026-12-03）。
+- 短链接（bit.ly、lddy.no、amzn.to 等）确认落地网站后，加上 `dest: 'keyst.one'` 之类的字段，按钮下方会显示"跳转至 xxx"。
+- 页面不再使用"原站"说法；原始数据来自 https://bigfang.vip/coldwallet/（2026-11-11 读取）。
+
+分享预览图为 og-image.png（1200×630），网站图标为 favicon.svg、favicon-32.png 与 apple-touch-icon.png。
 
 首页图案是 CSS 绘制的硬件钱包概念示意，不代表实际产品外观。视频封面为文字设计，并非视频原始缩略图。
 
