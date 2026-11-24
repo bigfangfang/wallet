@@ -31,6 +31,7 @@ GitHub 仓库 Settings → Pages → Deploy from a branch → main / (root)。Cu
 它会把品牌卡片直接写进 index.html 的 `<!--cards:start-->` 与 `<!--cards:end-->` 之间，搜索引擎和 X / Telegram 的链接预览不用执行 JS 也能读到内容。忘了运行也不会坏，页面会在浏览器里补渲染。
 
 - 亲自在结账页核对过某个折扣后，给该品牌加上 `verified: '2026-11'`，卡片会显示"已核对"标记。
+- 限时活动用 `promo: {offer, code, note, until}`，截止时间过后页面自动恢复常规优惠（例：SafePal 黑五 SFP@BIGFANG，至 2026-12-03）。
 - 短链接（bit.ly、lddy.no、amzn.to 等）确认落地网站后，加上 `dest: 'keyst.one'` 之类的字段，按钮下方会显示"跳转至 xxx"。
 - 页面不再使用"原站"说法；原始数据来自 https://bigfang.vip/coldwallet/（2026-11-11 读取）。
 

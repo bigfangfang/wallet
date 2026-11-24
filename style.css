@@ -30,3 +30,4 @@
 .safety-list{grid-template-columns:1fr;gap:10px}.safety-list li{padding:18px}
 .brand-video-copy>span{font-size:13.5px}.offer-note{font-size:12px}.link-hint{font-size:11.5px}
 }
+.limited{font-size:10.5px;font-weight:600;color:#172116;background:var(--green);border-radius:20px;padding:1px 8px;white-space:nowrap;order:-1}

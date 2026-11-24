@@ -2,8 +2,9 @@
 (function () {
   const { wallets, renderCards } = window.BigFangWallet;
   const grid = document.getElementById('wallet-grid');
-  // 卡片已预渲染进 index.html；若没有（例如忘了跑 prerender），在浏览器里补渲染
-  if (!grid.querySelector('.wallet-card')) grid.innerHTML = renderCards();
+  // index.html 里有预渲染的卡片（给搜索引擎和链接预览看）；
+  // 浏览器里按当天日期重新渲染一次，限时活动过期就自动恢复常规优惠
+  grid.innerHTML = renderCards(new Date());
   document.querySelector('.filter span').textContent = wallets.length;
 
   // 视频弹窗：品牌卡片里的影片和"新手先看"都用这里播放
