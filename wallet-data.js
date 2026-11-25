@@ -167,18 +167,25 @@
     return w.code ? '结账时输入折扣码；折扣力度、适用型号与地区以结账页为准。' : '优惠、适用型号与地区以下单页面为准。';
   }
 
-  function logo(w) {
-    return `<span class="brand-logo brand-logo--${w.brandId}"><img src="${w.logo}" alt="${esc(w.name)} Logo" width="124" height="44">${w.wordmark ? `<b>${esc(w.wordmark)}</b>` : ''}</span>`;
+  function logo(w, base) {
+    return `<span class="brand-logo brand-logo--${w.brandId}"><img src="${base}${w.logo.replace(/^\.\//, '')}" alt="${esc(w.name)} Logo" width="124" height="44">${w.wordmark ? `<b>${esc(w.wordmark)}</b>` : ''}</span>`;
   }
 
-  function card(w0, i, now) {
+  function card(w0, i, now, base = './') {
     const w = current(w0, now);
     const bf = activeBf(w0, now);
     const extras = w.extras ? `<details class="extra-links"><summary>更多购买入口</summary>${w.extras.map(([label, url]) => `<a href="${esc(url)}" ${outbound}>${esc(label)} ↗<small>${linkHint(url)}</small></a>`).join('')}</details>` : '';
-    return `<article class="wallet-card${w.limited || bf ? ' is-limited' : ''}" id="wallet-${w.brandId}" data-limited="${!!(w.limited || bf)}" data-name="${esc(w.name.toLowerCase())}" data-code="${!!(w.code || w.autoCodes)}" data-video="${w.videos.length > 0}"><div class="card-top">${logo(w)}<span class="card-index">WALLET / ${String(i + 1).padStart(2, '0')}</span></div><h3>${esc(w.name)}</h3><p class="card-subtitle">${esc(w.sub)}</p>${bf ? bfBox(bf) : ''}${offerBox(w)}${w.details ? `<ul class="promo-details">${w.details.map(d => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}${bf && bf.hideNote ? '' : `<p class="offer-note">${esc(w.note || defaultNote(w))}</p>`}<div class="card-actions"><a class="buy" href="${esc(w.url)}" ${outbound}>查看购买入口 <span>↗</span></a></div><p class="link-hint">${linkHint(w.url, w.dest)}</p>${extras}${brandVideoSection(w)}</article>`;
+    return `<article class="wallet-card${w.limited || bf ? ' is-limited' : ''}" id="wallet-${w.brandId}" data-limited="${!!(w.limited || bf)}" data-name="${esc(w.name.toLowerCase())}" data-code="${!!(w.code || w.autoCodes)}" data-video="${w.videos.length > 0}"><div class="card-top">${logo(w, base)}<span class="card-index">WALLET / ${String(i + 1).padStart(2, '0')}</span></div><h3>${esc(w.name)}</h3><p class="card-subtitle">${esc(w.sub)}</p>${bf ? bfBox(bf) : ''}${offerBox(w)}${w.details ? `<ul class="promo-details">${w.details.map(d => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}${bf && bf.hideNote ? '' : `<p class="offer-note">${esc(w.note || defaultNote(w))}</p>`}<div class="card-actions"><a class="buy" href="${esc(w.url)}" ${outbound}>查看购买入口 <span>↗</span></a></div><p class="link-hint">${linkHint(w.url, w.dest)}</p>${extras}${brandVideoSection(w)}</article>`;
   }
 
-  function renderCards(now = new Date()) { return wallets.map((w, i) => card(w, i, now)).join(''); }
+  // opts.onlyLimited：只输出有进行中限时活动的品牌（黑五专页用）；opts.base：logo 路径前缀
+  function renderCards(now = new Date(), opts = {}) {
+    const base = opts.base || './';
+    return wallets
+      .map((w, i) => ({ w, i }))
+      .filter(({ w }) => !opts.onlyLimited || (w.promo && now <= new Date(w.promo.until)) || activeBf(w, now))
+      .map(({ w, i }) => card(w, i, now, base)).join('');
+  }
 
   const api = { wallets, renderCards, renderDeals, activeDeals, isBfTheme, bestDiscount };
   root.BigFangWallet = api;
