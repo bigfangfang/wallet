@@ -1,10 +1,22 @@
 // 页面交互：筛选、搜索、复制折扣码、视频弹窗。数据与卡片模板在 wallet-data.js。
 (function () {
-  const { wallets, renderCards } = window.BigFangWallet;
+  const { wallets, renderCards, renderDeals, activeDeals, isBfTheme, bestDiscount } = window.BigFangWallet;
   const grid = document.getElementById('wallet-grid');
+  const now = new Date();
   // index.html 里有预渲染的卡片（给搜索引擎和链接预览看）；
   // 浏览器里按当天日期重新渲染一次，限时活动过期就自动恢复常规优惠
-  grid.innerHTML = renderCards(new Date());
+  grid.innerHTML = renderCards(now);
+
+  // 黑五主题与限时优惠横幅：到期自动关闭
+  document.body.classList.toggle('bf', isBfTheme(now));
+  const deals = activeDeals(now);
+  const dealSection = document.getElementById('deals');
+  dealSection.hidden = deals.length === 0;
+  document.getElementById('deal-grid').innerHTML = renderDeals(now);
+  document.getElementById('deal-count').textContent = new Set(deals.map(d => d.name)).size;
+  document.querySelector('.filter--limited').hidden = deals.length === 0;
+  document.querySelector('.nav-deals').hidden = deals.length === 0;
+  document.querySelectorAll('.js-best').forEach(el => { el.textContent = bestDiscount(now); });
   document.querySelector('.filter span').textContent = wallets.length;
 
   // 视频弹窗：品牌卡片里的影片和"新手先看"都用这里播放
@@ -66,6 +78,16 @@
     if (!button) return;
     try { await navigator.clipboard.writeText(button.dataset.copy); toast('已复制折扣码 ' + button.dataset.copy); }
     catch { toast('请手动复制折扣码：' + button.dataset.copy); }
+  });
+
+  // 点横幅里的品牌时，如果那张卡片被筛选藏起来了，先恢复显示全部
+  document.getElementById('deal-grid').addEventListener('click', event => {
+    const link = event.target.closest('.deal');
+    const target = link && document.querySelector(link.getAttribute('href'));
+    if (target && target.hidden) {
+      document.getElementById('search').value = '';
+      document.querySelector('.filter[data-filter="all"]').click();
+    }
   });
 
   filterWallets();
