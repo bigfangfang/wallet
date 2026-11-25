@@ -8,14 +8,14 @@
  *   note      优惠框下方的说明；不填则用默认说明
  *   verified  最近一次亲自在结账页核对折扣的时间，例如 '2026-11'；填了会显示"已核对"标记
  *   dest      短链接的实际落地网站，例如 'keyst.one'；填了会显示"跳转至 xxx"
- *   promo     限时活动 {offer, code, note, until}；until 之前覆盖上面的 offer/code/note，
+ *   promo     限时活动 {offer, code, note, url, autoCodes, until}；autoCodes 表示链接会自动带入的码；until 之前覆盖上面的 offer/code/note，
  *             过期后自动恢复，不用手动删
  */
 (function (root) {
   const wallets = [
     {name:'OneKey',sub:'专属链接 / 开箱与实测',offer:'专属链接购买赠 5–10 美元 BTC 兑换券',note:'通过专属链接购买即可参与；具体金额与领取规则以活动页面为准。',url:'https://onekey.so/r/BIGFANG'},
     {name:'Ledger',sub:'官方商店 / 开箱与转账教学',offer:'查看当前活动',note:'Ledger 过去有过最高 80 美元比特币的活动，现在是否还有，请在购买页确认。',url:'https://shop.ledger.com/?r=6ce1458cbb9d'},
-    {name:'Tangem',sub:'卡片与戒指钱包',offer:'折扣码 9 折',code:'BIGFANG',url:'https://tangem.com/pricing/?promocode=bigfang'},
+    {name:'Tangem',sub:'卡片与戒指钱包',offer:'折扣码 9 折',code:'BIGFANG',url:'https://tangem.com/pricing/?promocode=bigfang',promo:{offer:'黑五三重优惠：45% off + 免运费',code:'',autoCodes:'BIGFANG · BF2026 · SHP-W3NZ',note:'Tangem 黑五史上最大折扣。从这里进入，三个优惠码会自动带入：BIGFANG（10% off）+ BF2026（35% off）+ SHP-W3NZ（免运费）。实际价格以结账页为准。',url:'https://tangem.com/en/pricing/?promocode=bigfang&promocode=BF2026&promocode=SHP-W3NZ',until:'2026-11-30T23:59:59+08:00'}},
     {name:'SafePal',sub:'购买入口：S1 / 下方教学：X1',offer:'查看当前优惠',promo:{offer:'黑五全站 85 折',code:'SFP@BIGFANG',note:'黑五限时：11 月 20 日至 12 月 3 日有效，全站商品 15% off，结账时输入折扣码。',until:'2026-12-03T23:59:59+08:00'},url:'https://store.safepal.com/safepal-s1-hardware-wallet.html?ref=bigfang1'},
     {name:'ELLIPAL',sub:'Titan 系列 / Xcard',offer:'折扣码 9 折',code:'BIGFANG',url:'https://www.ellipal.com/?rfsn=6105468.7425bb'},
     {name:'Keystone',sub:'Pro / 3 Pro',offer:'折扣码',code:'BIGFANG',note:'过去有过 9 折和 7 折两种活动，折扣力度与适用型号请在结账页确认。',url:'https://keyst.one/?rfsn=7686504.37a306',extras:[['另一购买入口（曾有 7 折活动）','https://bit.ly/3FjaPXZ'],['大陆购买渠道','https://j.youzan.com/uGdaLd']]},
@@ -116,7 +116,7 @@
       return `<div class="offer"><span class="offer-label">${esc(w.offer)}${badge}</span><button class="copy" type="button" data-copy="${esc(w.code)}" aria-label="复制 ${esc(w.name)} 折扣码 ${esc(w.code)}">${esc(w.code)} <span aria-hidden="true">⧉</span></button></div>`;
     }
     // 没有折扣码时，整块就是真正可点的链接，避免"看起来像按钮却点不了"
-    return `<a class="offer offer--link" href="${esc(w.url)}" ${outbound}><span class="offer-label">${esc(w.offer)}${badge}</span><span class="offer-arrow" aria-hidden="true">↗</span></a>`;
+    return `<a class="offer offer--link" href="${esc(w.url)}" ${outbound}><span class="offer-label">${esc(w.offer)}${badge}${w.autoCodes ? `<span class="auto-codes">自动带入 ${esc(w.autoCodes)}</span>` : ''}</span><span class="offer-arrow" aria-hidden="true">↗</span></a>`;
   }
 
   function defaultNote(w) {
@@ -130,7 +130,7 @@
   function card(w0, i, now) {
     const w = current(w0, now);
     const extras = w.extras ? `<details class="extra-links"><summary>更多购买入口</summary>${w.extras.map(([label, url]) => `<a href="${esc(url)}" ${outbound}>${esc(label)} ↗<small>${linkHint(url)}</small></a>`).join('')}</details>` : '';
-    return `<article class="wallet-card" data-name="${esc(w.name.toLowerCase())}" data-code="${!!w.code}" data-video="${w.videos.length > 0}"><div class="card-top">${logo(w)}<span class="card-index">WALLET / ${String(i + 1).padStart(2, '0')}</span></div><h3>${esc(w.name)}</h3><p class="card-subtitle">${esc(w.sub)}</p>${offerBox(w)}<p class="offer-note">${esc(w.note || defaultNote(w))}</p><div class="card-actions"><a class="buy" href="${esc(w.url)}" ${outbound}>查看购买入口 <span>↗</span></a></div><p class="link-hint">${linkHint(w.url, w.dest)}</p>${extras}${brandVideoSection(w)}</article>`;
+    return `<article class="wallet-card" data-name="${esc(w.name.toLowerCase())}" data-code="${!!(w.code || w.autoCodes)}" data-video="${w.videos.length > 0}"><div class="card-top">${logo(w)}<span class="card-index">WALLET / ${String(i + 1).padStart(2, '0')}</span></div><h3>${esc(w.name)}</h3><p class="card-subtitle">${esc(w.sub)}</p>${offerBox(w)}<p class="offer-note">${esc(w.note || defaultNote(w))}</p><div class="card-actions"><a class="buy" href="${esc(w.url)}" ${outbound}>查看购买入口 <span>↗</span></a></div><p class="link-hint">${linkHint(w.url, w.dest)}</p>${extras}${brandVideoSection(w)}</article>`;
   }
 
   function renderCards(now = new Date()) { return wallets.map((w, i) => card(w, i, now)).join(''); }
