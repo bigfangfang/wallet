@@ -117,3 +117,4 @@ body.bf .share-dialog{background:#121010;border-color:#3a2420}body.bf .share-dia
 @media(max-width:650px){.share-fab{right:14px;bottom:14px;padding:11px 16px}}
 body.bf i.bf-only{display:inline;font-style:normal}
 .share-dialog .dialog-top h2{color:var(--text);margin:0;font-size:16px;font-weight:650}
+.directory-note a{color:var(--green);white-space:nowrap}
