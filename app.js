@@ -90,5 +90,46 @@
     }
   });
 
+  // 分享：X / Facebook / Telegram / WhatsApp / 微博 用各自的分享网址；
+  // Instagram 没有网页分享接口，手机上调用系统分享（可选 Instagram），电脑上复制链接
+  const shareUrl = 'https://wallet.bigfang.vip/';
+  const shareText = isBfTheme(now)
+    ? '想买冷钱包？黑五先看这一页：12 个冷钱包品牌的黑五活动与大方专属折扣码，截止时间都标好了。'
+    : '想买冷钱包？先看这一页：12 个冷钱包品牌的优惠码与开箱教学。';
+  const enc = encodeURIComponent;
+  const shareLinks = {
+    x: `https://x.com/intent/tweet?text=${enc(shareText)}&url=${enc(shareUrl)}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${enc(shareUrl)}`,
+    telegram: `https://t.me/share/url?url=${enc(shareUrl)}&text=${enc(shareText)}`,
+    whatsapp: `https://wa.me/?text=${enc(shareText + ' ' + shareUrl)}`,
+    weibo: `https://service.weibo.com/share/share.php?url=${enc(shareUrl)}&title=${enc(shareText)}`
+  };
+  const shareDialog = document.getElementById('share-dialog');
+  document.getElementById('share-text').textContent = shareText;
+  shareDialog.querySelectorAll('a[data-share]').forEach(a => { a.href = shareLinks[a.dataset.share]; });
+  const canNativeShare = typeof navigator.share === 'function';
+  shareDialog.querySelector('[data-share="native"]').hidden = !canNativeShare;
+  async function copyLink(message) {
+    try { await navigator.clipboard.writeText(shareUrl); toast(message); }
+    catch { toast('请手动复制：' + shareUrl); }
+  }
+  document.getElementById('share-open').addEventListener('click', () => {
+    if (typeof shareDialog.showModal === 'function') shareDialog.showModal();
+    else window.open(shareLinks.x, '_blank', 'noopener');
+  });
+  shareDialog.querySelector('.dialog-close').addEventListener('click', () => shareDialog.close());
+  shareDialog.addEventListener('click', e => { if (e.target === shareDialog) shareDialog.close(); });
+  shareDialog.addEventListener('click', async event => {
+    const item = event.target.closest('button[data-share]');
+    if (!item) return;
+    const kind = item.dataset.share;
+    if (kind === 'copy') return copyLink('链接已复制');
+    if ((kind === 'native' || kind === 'instagram') && canNativeShare) {
+      try { await navigator.share({ title: document.title, text: shareText, url: shareUrl }); } catch (e) { /* 用户取消分享 */ }
+      return;
+    }
+    if (kind === 'instagram') copyLink('链接已复制，打开 Instagram 粘贴到快拍或私信');
+  });
+
   filterWallets();
 })();

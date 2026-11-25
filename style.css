@@ -102,3 +102,18 @@ body.bf .cover-three{background:linear-gradient(125deg,#3d3410,#16140a);border-c
 body.bf .cover-word{color:#f6f3f0}
 @media(max-width:650px){.nav-deals{display:none}}
 .js-best{font-style:normal}
+/* share */
+.share-fab{position:fixed;right:22px;bottom:22px;z-index:20;display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 18px;min-height:46px;background:var(--green);color:#172116;font-size:14px;font-weight:650;box-shadow:0 10px 28px #0008}
+.share-fab:hover{filter:brightness(1.08)}
+body.bf .share-fab{color:#fff}
+.share-dialog{width:min(520px,94vw)}
+.share-lead{margin:0 20px 14px;font-size:13px;color:var(--muted);line-height:1.6}
+.share-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 20px 20px}
+.share-item{display:flex;flex-direction:column;gap:3px;text-align:left;padding:14px 16px;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer}
+.share-item:hover{border-color:var(--green)}
+.share-item b{font-size:15px;font-weight:650}.share-item span{font-size:12px;color:var(--muted)}
+body.bf .share-dialog{background:#121010;border-color:#3a2420}body.bf .share-dialog .dialog-close{background:#2a1513;color:#f6f3f0}
+#toast{z-index:30}
+@media(max-width:650px){.share-fab{right:14px;bottom:14px;padding:11px 16px}}
+body.bf i.bf-only{display:inline;font-style:normal}
+.share-dialog .dialog-top h2{color:var(--text);margin:0;font-size:16px;font-weight:650}
