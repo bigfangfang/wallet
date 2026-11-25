@@ -18,4 +18,14 @@ const out = html.replace(re, `<!--cards:start-->${renderCards(now)}<!--cards:end
   .replace(/<body( class="bf")?>/, `<body${isBfTheme(now) ? ' class="bf"' : ''}>`)
   .replace(/(data-filter="all"[^>]*>全部品牌 <span>)\d+(<\/span>)/, `$1${wallets.length}$2`);
 writeFileSync(file, out);
+
+// 黑五专页 /blackfriday/：只放有进行中限时活动的品牌
+const bfFile = new URL('../blackfriday/index.html', import.meta.url);
+const brands = new Set(deals.map(d => d.name)).size;
+const bfOut = readFileSync(bfFile, 'utf8')
+  .replace(/<!--cards:start-->[\s\S]*?<!--cards:end-->/, `<!--cards:start-->${renderCards(now, { onlyLimited: true, base: '../' })}<!--cards:end-->`)
+  .replace(/<!--deals:start-->[\s\S]*?<!--deals:end-->/, `<!--deals:start-->${renderDeals(now)}<!--deals:end-->`)
+  .replace(/<em id="deal-count">\d+<\/em>/, `<em id="deal-count">${brands}</em>`)
+  .replace(/(class="js-best">)[^<]*</g, `$1${bestDiscount(now) || '—'}<`);
+writeFileSync(bfFile, bfOut);
 console.log(`已写入 ${wallets.length} 张品牌卡片、${deals.length} 条限时优惠到 index.html（黑五主题：${isBfTheme(now) ? '开' : '关'}）`);

@@ -102,3 +102,8 @@ body.bf .cover-three{background:linear-gradient(125deg,#3d3410,#16140a);border-c
 body.bf .cover-word{color:#f6f3f0}
 @media(max-width:650px){.nav-deals{display:none}}
 .js-best{font-style:normal}
+/* /blackfriday page */
+.bf-page .bf-poster{display:flex}
+.bf-page .wallet-section{padding-top:80px}
+.bf-ended{text-align:center;padding:60px 20px;border:1px dashed var(--line);border-radius:12px}.bf-ended h3{font-size:24px;margin:0 0 10px}.bf-ended p{color:var(--muted);margin:0 0 22px}
+@media(max-width:650px){.bf-page .bf-poster{display:flex}.bf-page .wallet-section{padding-top:50px}}
