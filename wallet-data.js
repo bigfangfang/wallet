@@ -8,12 +8,12 @@
  *   note      优惠框下方的说明；不填则用默认说明
  *   verified  最近一次亲自在结账页核对折扣的时间，例如 '2026-11'；填了会显示"已核对"标记
  *   dest      短链接的实际落地网站，例如 'keyst.one'；填了会显示"跳转至 xxx"
- *   promo     限时活动 {offer, code, note, url, autoCodes, until}；autoCodes 表示链接会自动带入的码；until 之前覆盖上面的 offer/code/note，
+ *   promo     限时活动 {offer, code, note, url, autoCodes, details, until}；details 是逐条列出的活动内容；autoCodes 表示链接会自动带入的码；until 之前覆盖上面的 offer/code/note，
  *             过期后自动恢复，不用手动删
  */
 (function (root) {
   const wallets = [
-    {name:'OneKey',sub:'专属链接 / 开箱与实测',offer:'专属链接购买赠 5–10 美元 BTC 兑换券',note:'通过专属链接购买即可参与；具体金额与领取规则以活动页面为准。',url:'https://onekey.so/r/BIGFANG'},
+    {name:'OneKey',sub:'专属链接 / 开箱与实测',offer:'专属链接购买赠 5–10 美元 BTC 兑换券',note:'通过专属链接购买即可参与；具体金额与领取规则以活动页面为准。',url:'https://onekey.so/r/BIGFANG',promo:{offer:'黑五至新年活动：整机送礼或直降，配件全线 7 折',code:'',details:['Pro 2：送硅胶套或无线充电器（二选一）','Pro 1：6 折 + 1 个月 Prime 会员','Neo：送 SeedCard + 1 个月 Prime 会员','Classic 系列：直降 20U + 黑五期间包邮 + 1 个月 Prime 会员','所有配件：全线 7 折'],note:'活动时间：2026.11.25 – 2027.01.05。活动期间不能与专属链接送 BTC 兑换券叠加，具体以 OneKey 官网结账页为准。',until:'2027-01-05T23:59:59+08:00'}},
     {name:'Ledger',sub:'官方商店 / 开箱与转账教学',offer:'查看当前活动',note:'Ledger 过去有过最高 80 美元比特币的活动，现在是否还有，请在购买页确认。',url:'https://shop.ledger.com/?r=6ce1458cbb9d'},
     {name:'Tangem',sub:'卡片与戒指钱包',offer:'折扣码 9 折',code:'BIGFANG',url:'https://tangem.com/pricing/?promocode=bigfang',promo:{offer:'黑五三重优惠：45% off + 免运费',code:'',autoCodes:'BIGFANG · BF2026 · SHP-W3NZ',note:'Tangem 黑五史上最大折扣。从这里进入，三个优惠码会自动带入：BIGFANG（10% off）+ BF2026（35% off）+ SHP-W3NZ（免运费）。实际价格以结账页为准。',url:'https://tangem.com/en/pricing/?promocode=bigfang&promocode=BF2026&promocode=SHP-W3NZ',until:'2026-11-30T23:59:59+08:00'}},
     {name:'SafePal',sub:'购买入口：S1 / 下方教学：X1',offer:'查看当前优惠',promo:{offer:'黑五全站 85 折',code:'SFP@BIGFANG',note:'黑五限时：11 月 20 日至 12 月 3 日有效，全站商品 15% off，结账时输入折扣码。',until:'2026-12-03T23:59:59+08:00'},url:'https://store.safepal.com/safepal-s1-hardware-wallet.html?ref=bigfang1'},
@@ -130,7 +130,7 @@
   function card(w0, i, now) {
     const w = current(w0, now);
     const extras = w.extras ? `<details class="extra-links"><summary>更多购买入口</summary>${w.extras.map(([label, url]) => `<a href="${esc(url)}" ${outbound}>${esc(label)} ↗<small>${linkHint(url)}</small></a>`).join('')}</details>` : '';
-    return `<article class="wallet-card" data-name="${esc(w.name.toLowerCase())}" data-code="${!!(w.code || w.autoCodes)}" data-video="${w.videos.length > 0}"><div class="card-top">${logo(w)}<span class="card-index">WALLET / ${String(i + 1).padStart(2, '0')}</span></div><h3>${esc(w.name)}</h3><p class="card-subtitle">${esc(w.sub)}</p>${offerBox(w)}<p class="offer-note">${esc(w.note || defaultNote(w))}</p><div class="card-actions"><a class="buy" href="${esc(w.url)}" ${outbound}>查看购买入口 <span>↗</span></a></div><p class="link-hint">${linkHint(w.url, w.dest)}</p>${extras}${brandVideoSection(w)}</article>`;
+    return `<article class="wallet-card" data-name="${esc(w.name.toLowerCase())}" data-code="${!!(w.code || w.autoCodes)}" data-video="${w.videos.length > 0}"><div class="card-top">${logo(w)}<span class="card-index">WALLET / ${String(i + 1).padStart(2, '0')}</span></div><h3>${esc(w.name)}</h3><p class="card-subtitle">${esc(w.sub)}</p>${offerBox(w)}${w.details ? `<ul class="promo-details">${w.details.map(d => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}<p class="offer-note">${esc(w.note || defaultNote(w))}</p><div class="card-actions"><a class="buy" href="${esc(w.url)}" ${outbound}>查看购买入口 <span>↗</span></a></div><p class="link-hint">${linkHint(w.url, w.dest)}</p>${extras}${brandVideoSection(w)}</article>`;
   }
 
   function renderCards(now = new Date()) { return wallets.map((w, i) => card(w, i, now)).join(''); }
