@@ -132,6 +132,34 @@
     if (kind === 'instagram') copyLink('链接已复制，打开 Instagram 粘贴到快拍或私信');
   });
 
+  // 首屏轮播：黑五海报 ↔ 新手 5 步。黑五结束后只剩一张，不再轮动
+  (function heroCarousel() {
+    const root = document.getElementById('hero-carousel');
+    if (!root) return;
+    const slides = [...root.querySelectorAll('.hc-slide')].filter(el => getComputedStyle(el).display !== 'none');
+    const dots = root.querySelector('.hc-dots');
+    let index = 0, timer;
+    const show = i => {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((el, k) => { el.classList.toggle('is-active', k === index); el.setAttribute('aria-hidden', String(k !== index)); });
+      [...dots.children].forEach((d, k) => d.setAttribute('aria-selected', String(k === index)));
+    };
+    if (slides.length > 1) {
+      slides.forEach((el, k) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-label', el.getAttribute('aria-label'));
+        b.addEventListener('click', () => { show(k); restart(); });
+        dots.appendChild(b);
+      });
+    } else dots.hidden = true;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stop = () => clearInterval(timer);
+    const restart = () => { stop(); if (slides.length > 1 && !reduce) timer = setInterval(() => show(index + 1), 6000); };
+    root.addEventListener('mouseenter', stop); root.addEventListener('mouseleave', restart);
+    root.addEventListener('focusin', stop); root.addEventListener('focusout', restart);
+    show(0); restart();
+  })();
+
   // 板块菜单：滚到哪个板块，就高亮哪个
   const navLinks = [...document.querySelectorAll('.section-nav a')];
   const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
