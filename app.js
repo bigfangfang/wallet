@@ -95,8 +95,8 @@
   // Instagram 没有网页分享接口，手机上调用系统分享（可选 Instagram），电脑上复制链接
   const shareUrl = 'https://wallet.bigfang.vip/';
   const shareText = isBfTheme(now)
-    ? '想买冷钱包？黑五先看这一页：12 个冷钱包品牌的黑五活动与大方专属折扣码，截止时间都标好了。'
-    : '想买冷钱包？先看这一页：12 个冷钱包品牌的优惠码与开箱教学。';
+    ? '【大方讲冷钱包】想买冷钱包？黑五先看这一页：12 个冷钱包品牌的黑五活动与大方专属折扣码，截止时间都标好了。'
+    : '【大方讲冷钱包】想买冷钱包？先看这一页：12 个冷钱包品牌的优惠码与开箱教学。';
   const enc = encodeURIComponent;
   const shareLinks = {
     x: `https://x.com/intent/tweet?text=${enc(shareText)}&url=${enc(shareUrl)}`,

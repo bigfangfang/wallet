@@ -25,7 +25,7 @@ const faq = [...out.matchAll(/<details class="faq-item"><summary>([\s\S]*?)<\/su
 const author = { '@type': 'Person', '@id': SITE + '#bigfang', name: '大方 BigFang', url: 'https://bigfang.vip/',
   sameAs: ['https://www.youtube.com/@dafang', 'https://x.com/dafangbigfang', 'https://bigfang.vip/'] };
 const graph = [
-  { '@type': 'WebSite', '@id': SITE + '#website', url: SITE, name: '大方 BigFang 冷钱包指南', inLanguage: 'zh-CN', publisher: { '@id': SITE + '#bigfang' } },
+  { '@type': 'WebSite', '@id': SITE + '#website', url: SITE, name: '大方讲冷钱包', alternateName: ['BigFang on Cold Wallets', '大方 BigFang 冷钱包指南'], inLanguage: 'zh-CN', publisher: { '@id': SITE + '#bigfang' } },
   author,
   { '@type': 'WebPage', '@id': SITE + '#webpage', url: SITE, inLanguage: 'zh-CN', isPartOf: { '@id': SITE + '#website' },
     name: (out.match(/<title>([^<]*)<\/title>/) || [])[1], description: (out.match(/<meta name="description" content="([^"]*)"/) || [])[1],
