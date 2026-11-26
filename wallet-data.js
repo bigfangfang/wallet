@@ -7,6 +7,7 @@
  *   code      折扣码（有则显示复制按钮）
  *   note      优惠框下方的说明；不填则用默认说明
  *   verified  最近一次亲自在结账页核对折扣的时间，例如 '2026-11'；填了会显示"已核对"标记
+ *   url       购买链接；留空（''）时按钮显示“购买链接更新中”，不可点击
  *   dest      短链接的实际落地网站，例如 'keyst.one'；填了会显示"跳转至 xxx"
  *   promo     大方专属限时活动 {offer, short, code, note, url, autoCodes, details, until}；会覆盖常规优惠；
  *   bf        品牌官方黑五活动 {offer, short, details, until}；单独显示一块，不覆盖大方的折扣码；
@@ -23,10 +24,10 @@
     {name:'Keystone',sub:'Pro / 3 Pro',offer:'折扣码',code:'BIGFANG',note:'过去有过 9 折和 7 折两种活动，折扣力度与适用型号请在结账页确认。',url:'https://keyst.one/?rfsn=7686504.37a306',bf:{offer:'黑五全场 8 折',short:'全场 8 折',maxOff:20,until:'2026-12-04T23:59:59+08:00'}},
     {name:'Trezor',sub:'官网 / Safe 3 · Safe 5 · Safe 7',offer:'折扣码 95 折',code:'BIGFANG',url:'https://affil.trezor.io/aff_c?offer_id=133&aff_id=8005',bf:{offer:'黑五最高 6 折',short:'最高 6 折',maxOff:40,details:['Safe 3：省 33%','Safe 5：省 38%','Safe 7：省 28%','Keep Metal：省 30%'],until:'2027-01-05T23:59:59+08:00'}},
     {name:'CoolWallet',sub:'CoolWallet Pro',offer:'折扣码减 5 美元',code:'BIGFANG',url:'https://www.coolwallet.io/products/coolwallet-pro/?ref=bigfang'},
-    {name:'SecuX',sub:'V20',offer:'折扣码 9 折',code:'BIGFANG',url:'https://shop.secuxtech.com/discount/SecuX-Affiliate-LPF005?aff=335'},
+    {name:'SecuX',sub:'V20',offer:'折扣码 9 折',code:'BIGFANG',url:''},
     {name:'KeepKey',sub:'官方购买入口',offer:'查看当前优惠',url:'https://lddy.no/11a4b',dest:'keepkey.com'},
     {name:'Ballet 芭蕾钱包',search:'芭蕾钱包',sub:'官方购买入口',offer:'折扣码 95 折',code:'BIGFANG',url:'https://bitcoin.ballet.com/?ref=bigfang',bf:{offer:'黑五：REAL 两张装、三张装 5 折',short:'REAL 多张装 5 折',maxOff:50,until:'2026-11-30T23:59:59+08:00'}},
-    {name:'imKey',sub:'imKey Pro',offer:'查看当前优惠',note:'海外链接为亚马逊，请认准 imKey 官方店铺，不要买第三方卖家的货。',url:'https://amzn.to/3RYPNW1'}
+    {name:'imKey',sub:'imKey Pro',offer:'暂无优惠信息',note:'购买链接正在更新，请稍后再来看。',url:''}
   ];
 
   const brandAssets = {
@@ -172,6 +173,7 @@
     if (w.code) {
       return `<div class="offer"><span class="offer-label">${esc(w.offer)}${badge}</span><button class="copy" type="button" data-copy="${esc(w.code)}" aria-label="复制 ${esc(w.name)} 折扣码 ${esc(w.code)}">${esc(w.code)} <span aria-hidden="true">⧉</span></button></div>`;
     }
+    if (!w.url) return `<div class="offer offer--off"><span class="offer-label">${esc(w.offer)}${badge}</span></div>`;
     // 没有折扣码时，整块就是真正可点的链接，避免"看起来像按钮却点不了"
     return `<a class="offer offer--link" href="${esc(w.url)}" ${outbound}><span class="offer-label">${esc(w.offer)}${badge}${w.autoCodes ? `<span class="auto-codes">自动带入 ${esc(w.autoCodes)}</span>` : ''}</span><span class="offer-arrow" aria-hidden="true">↗</span></a>`;
   }
@@ -188,7 +190,7 @@
     const w = current(w0, now);
     const bf = activeBf(w0, now);
     const extras = w.extras ? `<details class="extra-links"><summary>更多购买入口</summary>${w.extras.map(([label, url]) => `<a href="${esc(url)}" ${outbound}>${esc(label)} ↗<small>${linkHint(url)}</small></a>`).join('')}</details>` : '';
-    return `<article class="wallet-card${w.limited || bf ? ' is-limited' : ''}" id="wallet-${w.brandId}" data-limited="${!!(w.limited || bf)}" data-name="${esc(w.name.toLowerCase())}" data-code="${!!(w.code || w.autoCodes)}" data-video="${w.videos.length > 0}"><div class="card-top">${logo(w, base)}<span class="card-index">WALLET / ${String(i + 1).padStart(2, '0')}</span></div><h3>${esc(w.name)}</h3><p class="card-subtitle">${esc(w.sub)}</p>${bf ? bfBox(bf) : ''}${offerBox(w)}${w.details ? `<ul class="promo-details">${w.details.map(d => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}${bf && bf.hideNote ? '' : `<p class="offer-note">${esc(w.note || defaultNote(w))}</p>`}<div class="card-actions"><a class="buy" href="${esc(w.url)}" ${outbound}>查看购买入口 <span>↗</span></a></div><p class="link-hint">${linkHint(w.url, w.dest)}</p>${extras}${brandVideoSection(w)}</article>`;
+    return `<article class="wallet-card${w.limited || bf ? ' is-limited' : ''}" id="wallet-${w.brandId}" data-limited="${!!(w.limited || bf)}" data-name="${esc(w.name.toLowerCase())}" data-code="${!!(w.code || w.autoCodes)}" data-video="${w.videos.length > 0}"><div class="card-top">${logo(w, base)}<span class="card-index">WALLET / ${String(i + 1).padStart(2, '0')}</span></div><h3>${esc(w.name)}</h3><p class="card-subtitle">${esc(w.sub)}</p>${bf ? bfBox(bf) : ''}${offerBox(w)}${w.details ? `<ul class="promo-details">${w.details.map(d => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}${bf && bf.hideNote ? '' : `<p class="offer-note">${esc(w.note || defaultNote(w))}</p>`}<div class="card-actions">${w.url ? `<a class="buy" href="${esc(w.url)}" ${outbound}>查看购买入口 <span>↗</span></a>` : `<span class="buy buy--off" aria-disabled="true">购买链接更新中</span>`}</div>${w.url ? `<p class="link-hint">${linkHint(w.url, w.dest)}</p>` : ''}${extras}${brandVideoSection(w)}</article>`;
   }
 
   // opts.onlyLimited：只输出有进行中限时活动的品牌（黑五专页用）；opts.base：logo 路径前缀
