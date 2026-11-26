@@ -162,10 +162,16 @@ body.bf .section-nav .nav-deals:not(.active){color:#ff6a5f}
 .faq-body{padding:0 20px 18px}
 .faq-body p{margin:0;font-size:14px;line-height:1.85;color:#d6dcd4}
 body.bf .faq-body p{color:#e4dedb}
-.faq-videos{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.faq-videos>span{font-size:12px;color:var(--muted);margin-right:2px}
-.faq-video{display:inline-flex;align-items:center;min-height:34px;padding:0 12px;border:1px solid var(--line);border-radius:999px;font-size:12.5px;color:var(--text)}
-.faq-video:hover{border-color:var(--green);color:var(--green)}
+.faq-videos{margin-top:16px}
+.faq-videos-label{margin:0 0 10px!important;font-size:12px!important;color:var(--muted)!important;letter-spacing:.5px}
+.faq-video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,230px));gap:14px}
+.faq-video{display:flex;flex-direction:column;gap:8px;color:var(--text)}
+.faq-thumb{position:relative;display:block;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#111;border:1px solid var(--line)}
+.faq-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
+.faq-thumb .mini-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px}
+.faq-video:hover .faq-thumb img{transform:scale(1.04)}.faq-video:hover .faq-video-title{color:var(--green)}
+.faq-video-title{font-size:13px;line-height:1.5;font-weight:600}
+.faq-video small{font-size:11px;color:var(--muted);margin-top:-4px}
 .faq-more{margin:16px 0 0;font-size:13px;color:var(--muted)}.faq-more a{color:var(--green)}
 @media(max-width:950px){.playlist-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:650px){.faq{padding-top:56px}.playlist-grid{grid-template-columns:1fr}.faq-item summary{font-size:15px;padding:16px 46px 16px 16px}.faq-body{padding:0 16px 16px}}
+@media(max-width:650px){.faq-video-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.faq{padding-top:56px}.playlist-grid{grid-template-columns:1fr}.faq-item summary{font-size:15px;padding:16px 46px 16px 16px}.faq-body{padding:0 16px 16px}}
