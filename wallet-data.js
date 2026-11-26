@@ -109,7 +109,7 @@
   }
 
   function videoItem(v) {
-    return `<button class="brand-video" type="button" data-video-id="${esc(v.id)}" data-video-list="${listFor(v.id)}" data-video-title="${esc(v.title)}" aria-label="播放：${esc(v.title)}"><span class="video-thumb"><img src="https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg" alt="" loading="lazy" width="96" height="54"><span class="mini-play" aria-hidden="true">▶</span></span><span class="brand-video-copy"><small>${esc(v.tag)}</small><span>${esc(v.title)}</span></span><span class="video-arrow" aria-hidden="true">↗</span></button>`;
+    return `<button class="brand-video" type="button" data-video-id="${esc(v.id)}" data-video-list="${listFor(v.id)}" data-video-title="${esc(v.title)}" aria-label="播放：${esc(v.title)}"><span class="video-thumb"><img src="https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg" alt="${esc(v.title)} 视频封面" loading="lazy" width="96" height="54"><span class="mini-play" aria-hidden="true">▶</span></span><span class="brand-video-copy"><small>${esc(v.tag)}</small><span>${esc(v.title)}</span></span><span class="video-arrow" aria-hidden="true">↗</span></button>`;
   }
 
   function brandVideoSection(w) {

@@ -17,6 +17,31 @@ const out = html.replace(re, `<!--cards:start-->${renderCards(now)}<!--cards:end
   .replace(/(class="js-best">)[^<]*</g, `$1${bestDiscount(now)}<`)
   .replace(/<body( class="bf")?>/, `<body${isBfTheme(now) ? ' class="bf"' : ''}>`)
   .replace(/(data-filter="all"[^>]*>全部品牌 <span>)\d+(<\/span>)/, `$1${wallets.length}$2`);
-writeFileSync(file, out);
+// 结构化数据（JSON-LD）：网站、作者、品牌列表、常见问题，帮助搜索引擎理解页面
+const SITE = 'https://wallet.bigfang.vip/';
+const strip = h => h.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').trim();
+const faq = [...out.matchAll(/<details class="faq-item"><summary>([\s\S]*?)<\/summary><div class="faq-body"><p>([\s\S]*?)<\/p>/g)]
+  .map(m => ({ '@type': 'Question', name: strip(m[1]), acceptedAnswer: { '@type': 'Answer', text: strip(m[2]) } }));
+const author = { '@type': 'Person', '@id': SITE + '#bigfang', name: '大方 BigFang', url: 'https://bigfang.vip/',
+  sameAs: ['https://www.youtube.com/@dafang', 'https://x.com/dafangbigfang', 'https://bigfang.vip/'] };
+const graph = [
+  { '@type': 'WebSite', '@id': SITE + '#website', url: SITE, name: '大方 BigFang 冷钱包指南', inLanguage: 'zh-CN', publisher: { '@id': SITE + '#bigfang' } },
+  author,
+  { '@type': 'WebPage', '@id': SITE + '#webpage', url: SITE, inLanguage: 'zh-CN', isPartOf: { '@id': SITE + '#website' },
+    name: (out.match(/<title>([^<]*)<\/title>/) || [])[1], description: (out.match(/<meta name="description" content="([^"]*)"/) || [])[1],
+    about: ['冷钱包', '硬件钱包', '冷钱包折扣码', '冷钱包优惠码', '冷钱包教程', '助记词'], author: { '@id': SITE + '#bigfang' },
+    dateModified: now.toISOString().slice(0, 10), primaryImageOfPage: SITE + 'og-image.png' },
+  { '@type': 'ItemList', '@id': SITE + '#wallets', name: '冷钱包品牌、折扣码与优惠码', numberOfItems: wallets.length,
+    itemListElement: wallets.map((w, i) => ({ '@type': 'ListItem', position: i + 1, name: w.name + ' 冷钱包', url: SITE + '#wallet-' + w.brandId })) },
+  { '@type': 'FAQPage', '@id': SITE + '#faq', mainEntity: faq }
+];
+const jsonld = `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')}</script>`;
+const outWithLd = out.replace(/<!--jsonld:start-->[\s\S]*?<!--jsonld:end-->/, `<!--jsonld:start-->${jsonld}<!--jsonld:end-->`);
+writeFileSync(file, outWithLd);
+
+// 网站地图：每次构建更新 lastmod
+writeFileSync(new URL('../sitemap.xml', import.meta.url),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${SITE}</loc>\n    <lastmod>${now.toISOString().slice(0, 10)}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>\n</urlset>\n`);
+console.log(`结构化数据：${faq.length} 条常见问题、${wallets.length} 个品牌；sitemap.xml 已更新`);
 
 console.log(`已写入 ${wallets.length} 张品牌卡片、${deals.length} 条限时优惠到 index.html（黑五主题：${isBfTheme(now) ? '开' : '关'}）`);
