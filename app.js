@@ -32,10 +32,11 @@
     event.preventDefault();
     lastVideoButton = button;
     const id = button.dataset.videoId;
+    const list = button.dataset.videoList;
     document.getElementById('video-dialog-title').textContent = button.dataset.videoTitle;
-    document.getElementById('video-youtube-link').href = `https://www.youtube.com/watch?v=${id}`;
+    document.getElementById('video-youtube-link').href = `https://www.youtube.com/watch?v=${id}${list ? '&list=' + list : ''}`;
     const frame = document.createElement('iframe');
-    frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+    frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${list ? '&list=' + list : ''}`;
     frame.title = button.dataset.videoTitle;
     frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
     frame.referrerPolicy = 'strict-origin-when-cross-origin';
@@ -130,6 +131,23 @@
     }
     if (kind === 'instagram') copyLink('链接已复制，打开 Instagram 粘贴到快拍或私信');
   });
+
+  // 板块菜单：滚到哪个板块，就高亮哪个
+  const navLinks = [...document.querySelectorAll('.section-nav a')];
+  const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if ('IntersectionObserver' in window) {
+    const navObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(a => {
+          const on = a.getAttribute('href') === '#' + entry.target.id;
+          a.classList.toggle('active', on);
+          if (on) { const bar = a.parentElement; bar.scrollTo({ left: a.offsetLeft - bar.clientWidth / 2 + a.offsetWidth / 2 }); }
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(sec => navObserver.observe(sec));
+  }
 
   filterWallets();
 })();

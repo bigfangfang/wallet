@@ -78,6 +78,20 @@
     'imKey':[{id:'mNkCXMuiw0Y',title:'imKey 开箱与转账入门教学',tag:'开箱教学'}]
   };
 
+  // 大方频道播放列表。影片链接都带上所属播放列表，看完一期会自动接着播下一期
+  const PLAYLISTS = {
+    knowledge: 'PLA3-q5uYfvIQ',          // 冷钱包知识
+    unbox: 'PLMzYfSJNBKvg',              // 冷錢包｜硬件錢包開箱與安全
+    teach: 'PLMGpuKShgF_o',              // 冷钱包教学：助记词·地址·备份
+    newbie: 'PLeCMlB5wOViA',             // 新手从这里开始
+    review: 'PL-aFVQ3QG8LQQPFO33PDawBeUutJNmn_I', // 冷钱包评测与横评
+    scam: 'PL-aFVQ3QG8LTvqH4DzCVlObXJeBMJi5pf'    // 防骗指南
+  };
+  // 品牌卡片里的影片默认放在“开箱与安全”列表里播；不在那个列表的单独指定
+  const VIDEO_LIST = { Voz2W9CJ3vU: 'review' };
+  const listFor = id => PLAYLISTS[VIDEO_LIST[id] || 'unbox'];
+  const watchUrl = (id, list) => `https://www.youtube.com/watch?v=${id}&list=${list || listFor(id)}`;
+
   wallets.forEach(w => { Object.assign(w, brandAssets[w.name]); w.videos = brandVideos[w.name] || []; });
 
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -95,7 +109,7 @@
   }
 
   function videoItem(v) {
-    return `<button class="brand-video" type="button" data-video-id="${esc(v.id)}" data-video-title="${esc(v.title)}" aria-label="播放：${esc(v.title)}"><span class="video-thumb"><img src="https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg" alt="" loading="lazy" width="96" height="54"><span class="mini-play" aria-hidden="true">▶</span></span><span class="brand-video-copy"><small>${esc(v.tag)}</small><span>${esc(v.title)}</span></span><span class="video-arrow" aria-hidden="true">↗</span></button>`;
+    return `<button class="brand-video" type="button" data-video-id="${esc(v.id)}" data-video-list="${listFor(v.id)}" data-video-title="${esc(v.title)}" aria-label="播放：${esc(v.title)}"><span class="video-thumb"><img src="https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg" alt="" loading="lazy" width="96" height="54"><span class="mini-play" aria-hidden="true">▶</span></span><span class="brand-video-copy"><small>${esc(v.tag)}</small><span>${esc(v.title)}</span></span><span class="video-arrow" aria-hidden="true">↗</span></button>`;
   }
 
   function brandVideoSection(w) {
@@ -187,7 +201,7 @@
       .map(({ w, i }) => card(w, i, now, base)).join('');
   }
 
-  const api = { wallets, renderCards, renderDeals, activeDeals, isBfTheme, bestDiscount };
+  const api = { wallets, renderCards, renderDeals, activeDeals, isBfTheme, bestDiscount, PLAYLISTS, watchUrl };
   root.BigFangWallet = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);
