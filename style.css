@@ -118,3 +118,16 @@ body.bf .share-dialog{background:#121010;border-color:#3a2420}body.bf .share-dia
 body.bf i.bf-only{display:inline;font-style:normal}
 .share-dialog .dialog-top h2{color:var(--text);margin:0;font-size:16px;font-weight:650}
 .directory-note a{color:var(--green);white-space:nowrap}
+/* wallet tools */
+.tools{padding-top:95px}
+.tools-note{margin:0 0 18px;padding:14px 18px;border:1px solid var(--line);border-left:0;border-radius:10px;background:var(--surface);font-size:13.5px;color:var(--muted);line-height:1.7}.tools-note b{color:var(--text)}
+.tool-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tool{display:flex;flex-direction:column;gap:8px;padding:22px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.tool-tag{align-self:flex-start;font-size:11px;font-weight:600;color:var(--green);border:1px solid currentColor;border-radius:20px;padding:1px 9px}
+.tool-name{font-size:17px;font-weight:650;color:var(--text)}.tool-name:hover{color:var(--green)}
+.tool p{margin:0;font-size:13px;line-height:1.75;color:var(--muted)}
+.tool .tool-warn{color:#e8c46a}
+.tool small{margin-top:auto;padding-top:6px;font-size:11.5px;color:#8d9b90}
+body.bf .tool .tool-warn{color:#ffd23f}
+@media(max-width:950px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.tools{padding-top:56px}.tool-grid{grid-template-columns:1fr;gap:10px}.tool{padding:18px}.nav-tools{display:none}}
