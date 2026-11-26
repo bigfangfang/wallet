@@ -20,13 +20,13 @@
     {name:'Tangem',sub:'卡片与戒指钱包',offer:'折扣码 9 折',code:'BIGFANG',url:'https://tangem.com/pricing/?promocode=bigfang',promo:{offer:'黑五三重优惠：45% off + 免运费',short:'三重优惠 45% off + 免运费',maxOff:45,code:'',autoCodes:'BIGFANG · BF2026 · SHP-W3NZ',note:'Tangem 黑五史上最大折扣。从这里进入，三个优惠码会自动带入：BIGFANG（10% off）+ BF2026（35% off）+ SHP-W3NZ（免运费）。实际价格以结账页为准。',url:'https://tangem.com/en/pricing/?promocode=bigfang&promocode=BF2026&promocode=SHP-W3NZ',until:'2026-11-29T23:59:59+08:00'}},
     {name:'SafePal',sub:'购买入口：S1 / 下方教学：X1',offer:'查看当前优惠',promo:{offer:'黑五全站 85 折',short:'全站 85 折 · SFP@BIGFANG',maxOff:15,code:'SFP@BIGFANG',note:'黑五限时：11 月 20 日至 12 月 3 日有效，全站商品 15% off，结账时输入折扣码。',until:'2026-12-03T23:59:59+08:00'},url:'https://www.safepal.com/store/s1?ref=bigfang12'},
     {name:'ELLIPAL',sub:'Titan 系列 / Xcard',offer:'折扣码 9 折',code:'BIGFANG',url:'https://www.ellipal.com/?rfsn=6105468.7425bb',bf:{offer:'黑五最高 5 折',short:'最高 5 折',maxOff:50,details:['X Card：$66.95（原价 $133.90）','Titan 2.0：$129（原价 $169）'],until:'2026-12-01T15:59:59+08:00'}},
-    {name:'Keystone',sub:'Pro / 3 Pro',offer:'折扣码',code:'BIGFANG',note:'过去有过 9 折和 7 折两种活动，折扣力度与适用型号请在结账页确认。',url:'https://keyst.one/?rfsn=7686504.37a306',bf:{offer:'黑五全场 8 折',short:'全场 8 折',maxOff:20,until:'2026-12-04T23:59:59+08:00'},extras:[['另一购买入口（曾有 7 折活动）','https://bit.ly/3FjaPXZ'],['大陆购买渠道','https://j.youzan.com/uGdaLd']]},
+    {name:'Keystone',sub:'Pro / 3 Pro',offer:'折扣码',code:'BIGFANG',note:'过去有过 9 折和 7 折两种活动，折扣力度与适用型号请在结账页确认。',url:'https://keyst.one/?rfsn=7686504.37a306',bf:{offer:'黑五全场 8 折',short:'全场 8 折',maxOff:20,until:'2026-12-04T23:59:59+08:00'}},
     {name:'Trezor',sub:'官网 / Safe 3 · Safe 5 · Safe 7',offer:'折扣码 95 折',code:'BIGFANG',url:'https://affil.trezor.io/aff_c?offer_id=133&aff_id=8005',bf:{offer:'黑五最高 6 折',short:'最高 6 折',maxOff:40,details:['Safe 3：省 33%','Safe 5：省 38%','Safe 7：省 28%','Keep Metal：省 30%'],until:'2027-01-05T23:59:59+08:00'}},
     {name:'CoolWallet',sub:'CoolWallet Pro',offer:'折扣码减 5 美元',code:'BIGFANG',url:'https://www.coolwallet.io/products/coolwallet-pro/?ref=bigfang'},
-    {name:'SecuX',sub:'V20',offer:'折扣码 9 折',code:'BIGFANG',url:'https://bit.ly/46RYNAO'},
-    {name:'KeepKey',sub:'官方购买入口',offer:'查看当前优惠',url:'https://lddy.no/11a4b'},
+    {name:'SecuX',sub:'V20',offer:'折扣码 9 折',code:'BIGFANG',url:'https://shop.secuxtech.com/discount/SecuX-Affiliate-LPF005?aff=335'},
+    {name:'KeepKey',sub:'官方购买入口',offer:'查看当前优惠',url:'https://lddy.no/11a4b',dest:'keepkey.com'},
     {name:'Ballet 芭蕾钱包',search:'芭蕾钱包',sub:'官方购买入口',offer:'折扣码 95 折',code:'BIGFANG',url:'https://bitcoin.ballet.com/?ref=bigfang',bf:{offer:'黑五：REAL 两张装、三张装 5 折',short:'REAL 多张装 5 折',maxOff:50,until:'2026-11-30T23:59:59+08:00'}},
-    {name:'imKey',sub:'海外 / 大陆渠道',offer:'查看当前优惠',note:'海外链接为亚马逊，请认准 imKey 官方店铺，不要买第三方卖家的货。',url:'https://amzn.to/3RYPNW1',extras:[['大陆购买渠道','https://j.youzan.com/ApdigA']]}
+    {name:'imKey',sub:'imKey Pro',offer:'查看当前优惠',note:'海外链接为亚马逊，请认准 imKey 官方店铺，不要买第三方卖家的货。',url:'https://amzn.to/3RYPNW1'}
   ];
 
   const brandAssets = {
@@ -80,24 +80,23 @@
 
   // 大方频道播放列表。影片链接都带上所属播放列表，看完一期会自动接着播下一期
   const PLAYLISTS = {
-    knowledge: 'PLA3-q5uYfvIQ',          // 冷钱包知识
-    unbox: 'PLMzYfSJNBKvg',              // 冷錢包｜硬件錢包開箱與安全
-    teach: 'PLMGpuKShgF_o',              // 冷钱包教学：助记词·地址·备份
+    knowledge: 'PLMGpuKShgF_o',          // 冷钱包知识（原“冷钱包教学”合并进来）
     newbie: 'PLeCMlB5wOViA',             // 新手从这里开始
-    review: 'PL-aFVQ3QG8LQQPFO33PDawBeUutJNmn_I', // 冷钱包评测与横评
+    review: 'PL-aFVQ3QG8LQQPFO33PDawBeUutJNmn_I', // 冷钱包评测与横评（含各品牌开箱）
+    incidents: 'PLXHjWrKqXjnI',          // 安全事件追踪
     scam: 'PL-aFVQ3QG8LTvqH4DzCVlObXJeBMJi5pf'    // 防骗指南
   };
-  // 品牌卡片里的影片默认放在“开箱与安全”列表里播；不在那个列表的单独指定
-  const VIDEO_LIST = { Voz2W9CJ3vU: 'review' };
-  const listFor = id => PLAYLISTS[VIDEO_LIST[id] || 'unbox'];
+  // 品牌卡片里的影片都在“冷钱包评测与横评”列表里播；不在那个列表的单独指定
+  const VIDEO_LIST = {};
+  const listFor = id => PLAYLISTS[VIDEO_LIST[id] || 'review'];
   const watchUrl = (id, list) => `https://www.youtube.com/watch?v=${id}&list=${list || listFor(id)}`;
 
   wallets.forEach(w => { Object.assign(w, brandAssets[w.name]); w.videos = brandVideos[w.name] || []; });
 
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const outbound = 'target="_blank" rel="sponsored noopener noreferrer"';
-  const SHORT_HOSTS = ['bit.ly','lddy.no','amzn.to','j.youzan.com'];
-  const SHORT_NAMES = {'amzn.to':'亚马逊','j.youzan.com':'有赞'};
+  const SHORT_HOSTS = ['bit.ly','lddy.no','amzn.to'];
+  const SHORT_NAMES = {'amzn.to':'亚马逊'};
 
   function host(url) { return new URL(url).hostname.replace(/^www\./, ''); }
   // 按钮下方如实显示链接会去哪里，方便读者判断是不是钓鱼网站
