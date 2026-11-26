@@ -29,7 +29,7 @@ const graph = [
   author,
   { '@type': 'WebPage', '@id': SITE + '#webpage', url: SITE, inLanguage: 'zh-CN', isPartOf: { '@id': SITE + '#website' },
     name: (out.match(/<title>([^<]*)<\/title>/) || [])[1], description: (out.match(/<meta name="description" content="([^"]*)"/) || [])[1],
-    about: ['冷钱包', '硬件钱包', '冷钱包折扣码', '冷钱包优惠码', '冷钱包教程', '助记词'], author: { '@id': SITE + '#bigfang' },
+    about: ['冷钱包', '冷钱包教程', '助记词', '硬件钱包', '冷钱包常见问题', '冷钱包折扣码'], author: { '@id': SITE + '#bigfang' },
     dateModified: now.toISOString().slice(0, 10), primaryImageOfPage: SITE + 'og-image.png' },
   { '@type': 'ItemList', '@id': SITE + '#wallets', name: '冷钱包品牌、折扣码与优惠码', numberOfItems: wallets.length,
     itemListElement: wallets.map((w, i) => ({ '@type': 'ListItem', position: i + 1, name: w.name + ' 冷钱包', url: SITE + '#wallet-' + w.brandId })) },
